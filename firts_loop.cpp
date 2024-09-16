@@ -4,26 +4,30 @@
 
 #define MAX 10000
 
-double A[MAX][MAX], B[MAX][MAX], C[MAX][MAX];
+double A[MAX][MAX], x[MAX], y[MAX];
 
-// Inicializa las matrices con valores aleatorios
 void initialize() {
     for (int i = 0; i < MAX; i++) {
+        x[i] = rand() % 100;
+        y[i] = 0;
         for (int j = 0; j < MAX; j++) {
             A[i][j] = rand() % 100;
-            B[i][j] = rand() % 100;
-            C[i][j] = 0;
         }
     }
 }
 
-// Multiplica las matrices A y B y almacena el resultado en C
-void matrix_multiply() {
+void first_loops() {
     for (int i = 0; i < MAX; i++) {
         for (int j = 0; j < MAX; j++) {
-            for (int k = 0; k < MAX; k++) {
-                C[i][j] += A[i][k] * B[k][j];
-            }
+            y[i] += A[i][j] * x[j];
+        }
+    }
+}
+
+void second_loops() {
+    for (int j = 0; j < MAX; j++) {
+        for (int i = 0; i < MAX; i++) {
+            y[i] += A[i][j] * x[j];
         }
     }
 }
@@ -34,12 +38,17 @@ int main() {
 
     initialize();
 
-    // Mide el tiempo de ejecución de la multiplicación de matrices
+    // Measure performance of the first pair of loops
     start = clock();
-    matrix_multiply();
+    first_loops();
     end = clock();
     cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Time for matrix multiplication: %f seconds\n", cpu_time_used);
+    printf("Time for first loops: %f seconds\n", cpu_time_used);
+
+    // Reset y array
+    for (int i = 0; i < MAX; i++) {
+        y[i] = 0;
+    }
 
     return 0;
 }
