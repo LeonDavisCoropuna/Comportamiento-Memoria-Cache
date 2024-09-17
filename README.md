@@ -1,43 +1,65 @@
-## Primera Implementacion (Two - Loops) 
-La diferencia en el tiempo de ejecución entre los dos bloques de código (`first_loops` y `second_loops`) se debe a cómo se accede a la memoria, lo que tiene un impacto significativo en el rendimiento debido a la forma en que funciona la caché del procesador.
+# Comportamiento de Memoria Cache
 
-### Explicación del Rendimiento Inferior en `second_loops`
+Este proyecto evalúa el comportamiento de la memoria caché de dos algoritmos de multiplicación de matrices: el clásico y el basado en bloques. El proyecto utiliza CMake para la configuración del proyecto y un script de shell (`run.sh`) para ejecutar las pruebas.
 
-#### Acceso a la Memoria y Localidad Espacial
+## Requisitos
 
-1. **Orden de Acceso a la Memoria**:
-   - **`first_loops`**: 
-     ```c
-     void first_loops() {
-         for (int i = 0; i < MAX; i++) {
-             for (int j = 0; j < MAX; j++) {
-                 y[i] += A[i][j] * x[j];
-             }
-         }
-     }
-     ```
-     Aquí, `y[i]` se accede de manera secuencial a lo largo de la iteración sobre `i`, y `A[i][j]` se accede de manera secuencial a lo largo de `j`. Debido a que las matrices en C se almacenan en orden de fila (row-major order), `A[i][j]` está en la misma fila de memoria consecutivamente. Esto significa que, a medida que avanzas en `j`, los accesos a `A[i][j]` están contiguos en la memoria, lo que resulta en una buena localidad espacial y una alta probabilidad de que los datos estén en caché.
+Antes de comenzar, asegúrate de tener los siguientes requisitos instalados:
+- **CMake**: Para generar archivos de construcción.
+- **GCC**: Para compilar el código en C.
+- **Valgrind**: Para analizar el uso de la memoria caché.
+- **KCachegrind**: Para visualizar los resultados del análisis de caché.
 
-   - **`second_loops`**:
-     ```c
-     void second_loops() {
-         for (int j = 0; j < MAX; j++) {
-             for (int i = 0; i < MAX; i++) {
-                 y[i] += A[i][j] * x[j];
-             }
-         }
-     }
-     ```
-     En este caso, `A[i][j]` se accede de manera que `j` cambia más rápidamente que `i`. Como `A` está almacenada en orden de fila, acceder a `A[i][j]` con `j` cambiando primero causa que el acceso a la memoria no sea secuencial en la mayoría de los casos. Esto resulta en muchos fallos de caché, ya que cada nuevo acceso a `A[i][j]` puede estar en una ubicación de memoria diferente y no necesariamente cercana al anterior.
+## Instrucciones de Ejecución
 
-#### Impacto en la Caché del Procesador
+1. **Clona el repositorio**
 
-- **Localidad Temporal y Espacial**:
-  - **Localidad Espacial**: En `first_loops`, los accesos a `A[i][j]` están en direcciones de memoria contiguas, lo que permite que los datos sean cargados en la caché y reutilizados eficientemente. En `second_loops`, la falta de contigüidad en los accesos a `A[i][j]` resulta en un bajo rendimiento de caché.
-  - **Localidad Temporal**: La localidad temporal se refiere a la reutilización de los mismos datos en un corto período de tiempo. En `first_loops`, `y[i]` se accede repetidamente mientras `j` varía, lo que favorece la localidad temporal. En `second_loops`, cada `y[i]` se actualiza menos frecuentemente durante la iteración sobre `j`.
+   Primero, clona el repositorio desde GitHub. Abre una terminal y ejecuta el siguiente comando:
 
-- **Caché Misses**:
-  - **`first_loops`**: Accede a datos en la caché con una alta probabilidad de que los datos sean consecutivos en la memoria, reduciendo el número de fallos de caché.
-  - **`second_loops`**: Puede resultar en muchos fallos de caché debido al acceso no contiguo a `A[i][j]`, lo que provoca que se tenga que cargar constantemente nuevas ubicaciones de memoria en la caché.
+   ```bash
+   git clone https://github.com/LeonDavisCoropuna/Comportamiento-Memoria-Cache.git
+   ```
 
-El algoritmo `first_loops` es más rápido porque accede a la memoria de una manera que maximiza la eficiencia de la caché del procesador. Al iterar a través de `i` y `j` en el orden de fila, se aprovecha la contigüidad de la memoria en la que se almacenan los datos. En contraste, `second_loops` no aprovecha la contigüidad de la memoria debido al orden en el que se accede a los datos, lo que resulta en un mayor número de fallos de caché y, por ende, un peor rendimiento.
+   Luego, navega al directorio del proyecto:
+
+   ```bash
+   cd Comportamiento-Memoria-Cache
+   ```
+
+2. **Ejecuta el script `run.sh`**
+
+   El script `run.sh` compilará el proyecto (si no se ha hecho ya) y ejecutará las pruebas para diferentes tamaños de matrices. Asegúrate de que el script tenga permisos de ejecución y luego ejecútalo:
+
+   ```bash
+   chmod +x run.sh
+   ./run.sh
+   ```
+
+   El script generará dos tipos de resultados:
+   - **Tiempos de Ejecución**: Se guardarán en `results/tiempos`.
+   - **Análisis de Caché**: Se guardarán en `results/cache`.
+
+3. **Visualiza los resultados**
+
+   Los resultados del análisis de caché se pueden visualizar usando KCachegrind. Para abrir el archivo de salida generado por Valgrind, usa el siguiente comando:
+
+   ```bash
+   kcachegrind results/cache/cache_<size>.txt
+   ```
+
+   Reemplaza `<size>` con el tamaño de la matriz correspondiente.
+
+## Archivos del Proyecto
+
+- **`src/classic.cpp`**: Implementación del algoritmo de multiplicación de matrices clásico.
+- **`src/block.cpp`**: Implementación del algoritmo de multiplicación de matrices en bloque.
+- **`CMakeLists.txt`**: Archivo de configuración de CMake.
+- **`run.sh`**: Script para compilar y ejecutar los programas de prueba.
+
+## Contribuciones
+
+Si deseas contribuir a este proyecto, por favor, realiza un fork del repositorio, haz tus cambios y envía un pull request con tus contribuciones.
+
+## Contacto
+
+Para cualquier consulta, puedes contactar a Leon Davis a través de [GitHub](https://github.com/LeonDavisCoropuna).

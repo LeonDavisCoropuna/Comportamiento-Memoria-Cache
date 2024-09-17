@@ -1,0 +1,1 @@
+Time for matrix multiplication (block size 32) of size 100: 0.001252 seconds
