@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define BLOCK_SIZE 32
+#define BLOCK_SIZE 64
 
 double **A, **B, **C;
 

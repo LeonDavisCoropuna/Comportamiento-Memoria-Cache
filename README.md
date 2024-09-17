@@ -39,12 +39,30 @@ Antes de comenzar, asegúrate de tener los siguientes requisitos instalados:
    - **Tiempos de Ejecución**: Se guardarán en `results/tiempos`.
    - **Análisis de Caché**: Se guardarán en `results/cache`.
 
-3. **Visualiza los resultados**
+3. **Cambiar tamaños de matrices y arrays**
+
+   Si deseas cambiar los tamaños de las matrices o arrays utilizados en las pruebas, puedes modificar las siguientes variables en el script `run.sh`:
+
+   - Para tamaños de matrices (usado en los algoritmos de multiplicación de matrices), edita la lista `MATRIX_SIZES`:
+     ```bash
+     MATRIX_SIZES=(100 300 400)
+     ```
+     Puedes agregar o modificar los tamaños que desees probar.
+
+   - Para tamaños de arrays (usado en los bucles), edita la lista `LOOP_SIZES`:
+     ```bash
+     LOOP_SIZES=(100 500 1000)
+     ```
+     Aquí también puedes agregar o modificar los tamaños a probar.
+
+   Una vez editados, guarda el archivo y vuelve a ejecutar el script para probar los nuevos tamaños.
+
+4. **Visualiza los resultados**
 
    Los resultados del análisis de caché se pueden visualizar usando KCachegrind. Para abrir el archivo de salida generado por Valgrind, usa el siguiente comando:
 
    ```bash
-   kcachegrind results/cache/cache_<size>.txt
+   kcachegrind results/cache/cache_<size>.out
    ```
 
    Reemplaza `<size>` con el tamaño de la matriz correspondiente.
@@ -53,6 +71,8 @@ Antes de comenzar, asegúrate de tener los siguientes requisitos instalados:
 
 - **`src/classic.cpp`**: Implementación del algoritmo de multiplicación de matrices clásico.
 - **`src/block.cpp`**: Implementación del algoritmo de multiplicación de matrices en bloque.
+- **`src/first_loop.cpp`**: Implementación del primer bucle.
+- **`src/second_loop.cpp`**: Implementación del segundo bucle.
 - **`CMakeLists.txt`**: Archivo de configuración de CMake.
 - **`run.sh`**: Script para compilar y ejecutar los programas de prueba.
 
