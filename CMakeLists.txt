@@ -6,8 +6,14 @@ project(MatrixMultiplication)
 # Habilitar compilación con C++11
 set(CMAKE_CXX_STANDARD 11)
 
-# Agregar optimizaciones para el rendimiento
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+# Establecer opciones de compilación
+if(CMAKE_BUILD_TYPE MATCHES Debug)
+    # Compilación en modo depuración
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g")
+else()
+    # Compilación en modo de liberación con optimizaciones
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
+endif()
 
 # Agregar el archivo fuente
 add_executable(classic_matrix_multiply src/classic.cpp)

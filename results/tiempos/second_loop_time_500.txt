@@ -1,1 +1,1 @@
-Time for the second pair of loops (size 500): 0.000343 seconds
+Time for the second pair of loops (size 500): 0.001773 seconds

@@ -1,0 +1,1 @@
+Time for matrix multiplication of size 1500: 26.686783 seconds

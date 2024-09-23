@@ -1,0 +1,1 @@
+Time for matrix multiplication of size 2000: 69.472174 seconds

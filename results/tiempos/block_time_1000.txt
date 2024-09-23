@@ -1,0 +1,1 @@
+Time for matrix multiplication (block size 64) of size 1000: 2.067234 seconds

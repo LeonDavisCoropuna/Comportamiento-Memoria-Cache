@@ -1,1 +1,1 @@
-Time for matrix multiplication of size 300: 0.019609 seconds
+Time for matrix multiplication of size 300: 0.082662 seconds

@@ -1,1 +1,1 @@
-Time for matrix multiplication (block size 64) of size 300: 0.011489 seconds
+Time for matrix multiplication (block size 64) of size 300: 0.056035 seconds

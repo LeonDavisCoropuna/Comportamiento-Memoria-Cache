@@ -1,1 +1,1 @@
-Time for the first pair of loops (size 100): 1e-05 seconds
+Time for the first pair of loops (size 100): 2.2e-05 seconds

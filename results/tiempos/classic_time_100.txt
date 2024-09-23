@@ -1,1 +1,1 @@
-Time for matrix multiplication of size 100: 0.001274 seconds
+Time for matrix multiplication of size 100: 0.004821 seconds

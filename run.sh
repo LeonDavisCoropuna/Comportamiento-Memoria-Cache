@@ -14,17 +14,17 @@ mkdir -p $CACHE_DIR
 mkdir -p $TIEMPOS_DIR
 mkdir -p $BUILD_DIR
 
-# Crear el directorio build y compilar el programa
-echo "Compilando el programa..."
+# Crear el directorio build y compilar el programa en modo depuración
+echo "Compilando el programa en modo depuración..."
 cd $BUILD_DIR
-cmake .. && make
+cmake -DCMAKE_BUILD_TYPE=Debug .. && make
 
 # Regresar al directorio raíz
 cd ..
 
 # Tamaños de matrices a probar
-MATRIX_SIZES=(100 300 400)
-LOOP_SIZES=(100 500 1000 5000 10000)
+MATRIX_SIZES=(100 300 700 1000 1500 2000)
+LOOP_SIZES=(100 500 1000 5000 10000 20000)
 
 # Ejecutar el algoritmo clásico para diferentes tamaños de matrices
 for size in "${MATRIX_SIZES[@]}"; do

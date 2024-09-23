@@ -1,0 +1,1 @@
+Time for the first pair of loops (size 20000): 1.04737 seconds
